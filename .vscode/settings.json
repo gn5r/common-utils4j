@@ -1,0 +1,6 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.maven.updateSnapshots": true,
+    "java.maven.downloadSources": true,
+    "maven.executable.options": "-s C:\\Users\\gn5r\\.m2\\settings_github.xml"
+}
