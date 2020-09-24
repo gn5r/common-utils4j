@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
  * @author gn5r
  * @since 0.1.1-RELEASE
  */
-public class DateFormat {
+public final class DateFormat {
 
     /**
      * yyyy/MM/dd HH:mm:ss 形式に変換する

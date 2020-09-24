@@ -19,7 +19,7 @@ import org.apache.commons.lang3.StringUtils;
  * @since 0.1.0-RELEASE
  * @see StringUtils
  */
-public class StringUtil extends StringUtils {
+public final class StringUtil extends StringUtils {
 
 	/**
 	 * 正規表現にマッチした最初の文字列を切り取る。マッチしなければ {@code null} を返却

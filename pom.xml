@@ -1,11 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gn5r</groupId>
 	<artifactId>common-utils</artifactId>
-	<version>0.1.1-RELEASE</version>
+	<version>0.1.2-RELEASE</version>
 	<name>common-utils</name>
 	<url>https://github.com/gn5r/common-utils4j</url>
 	<description>Common Util Library for Java</description>
@@ -33,6 +31,23 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.11</version>
 		</dependency>
+
+		<!-- JUnit5 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+			<version>1.18.12</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<!-- ビルド設定 -->
@@ -50,6 +65,7 @@
 					<encoding>UTF-8</encoding>
 					<docencoding>UTF-8</docencoding>
 					<charset>UTF-8</charset>
+					<failOnError>false</failOnError>
 				</configuration>
 				<executions>
 					<execution>
