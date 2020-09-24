@@ -42,7 +42,7 @@ public final class ObjectUtil extends ObjectUtils {
      * @param excludes 除外フィールド名配列
      * @return {@linkplain Difference} 相違フィールドリスト
      */
-    public static final <T> List<Difference> diff(T a, T b, String ...excludes) {
+    public static final <T> List<Difference> diff(T a, T b, String... excludes) {
         List<Difference> diffList = new ArrayList<Difference>();
 
         commonProccess(a, b);
