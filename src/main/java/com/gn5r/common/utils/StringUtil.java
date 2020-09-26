@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
  *   <li><b>substring</b>
  *    - 正規表現にマッチした文字列を切り出す。マッチしなければ {@code null} を返却</li>
  *   <li><b>nullToEmpty</b>
- *    - 引数で渡された {@linkplain CharSequence} が {@code null} だった場合 空文字("") を返却する</li>
+ *    - 引数で渡された {@link CharSequence} が {@code null} だった場合 空文字("") を返却する</li>
  * </ul>
  *
  * @author gn5r
@@ -41,7 +41,7 @@ public final class StringUtil extends StringUtils {
 	}
 
 	/**
-	 * <p>引数で渡された {@linkplain CharSequence} が null だった場合に 空文字("") を返却する</p>
+	 * <p>引数で渡された {@link CharSequence} が null だった場合に 空文字("") を返却する</p>
 	 *
 	 * @param cs チェックしたいCharSequence
 	 * @return 最初の引数が {@code null} であれば 空文字("") を返却し、それ以外の場合は文字列に変換したものを返却

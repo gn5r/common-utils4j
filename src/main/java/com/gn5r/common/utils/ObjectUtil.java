@@ -13,16 +13,16 @@ import org.apache.commons.lang3.ObjectUtils;
 
 /**
  * <p>
- * {@linkplain ObjectUtils}拡張クラス
+ * {@link ObjectUtils}拡張クラス
  * </p>
  *
  * <ul>
  * <li><b>diff</b> - クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば
- * {@linkplain Difference}のリストを返却する。相違がなければ空のリストを返却する</li>
+ * {@link Difference}のリストを返却する。相違がなければ空のリストを返却する</li>
  * <li><b>check</b> - クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば {@value true}
  * を、相違がなければ {@value false} を返却する</li>
  * <li><b>diffSameObject</b> - 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば
- * {@linkplain Difference}のリストを返却する。相違がなければ空のリストを返却する。</li>
+ * {@link Difference}のリストを返却する。相違がなければ空のリストを返却する。</li>
  * <li><b>checkSameObject</b> - 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば
  * {@value true} を、相違がなければ {@value false} を返却する。</li>
  * </ul>
@@ -35,13 +35,13 @@ public final class ObjectUtil extends ObjectUtils {
 
     /**
      * 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば
-     * {@linkplain Difference}のリストを返却する。相違がなければ空のリストを返却する
+     * {@link Difference}のリストを返却する。相違がなければ空のリストを返却する
      * 
      * @param <T>      比較するオブジェクトのタイプ
      * @param a        オブジェクトa
      * @param b        オブジェクトb
      * @param excludes 除外フィールド名のString配列
-     * @return {@linkplain Difference} 相違フィールドリスト
+     * @return {@link Difference} 相違フィールドリスト
      * @throws NullPointerException     オブジェクトaまたはオブジェクトbが {@code null} の場合にthrowする
      * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
      */
@@ -80,7 +80,7 @@ public final class ObjectUtil extends ObjectUtils {
 
     /**
      * クラスオブジェクトの同一フィールドパラメータを比較する。パラメータに相違があれば
-     * {@linkplain Difference}のリストを返却する。相違がなければ空のリストを返却する
+     * {@link Difference}のリストを返却する。相違がなければ空のリストを返却する
      * <p>
      * 同一フィールドが存在しない場合はパラメータの比較をしないので空のリストが返却される
      * </p>
@@ -89,7 +89,7 @@ public final class ObjectUtil extends ObjectUtils {
      * @param a        オブジェクトa
      * @param b        オブジェクトb
      * @param excludes 除外フィールド名のString配列
-     * @return {@linkplain Difference} 相違フィールドリスト
+     * @return {@link Difference} 相違フィールドリスト
      * @throws NullPointerException     オブジェクトaまたはオブジェクトbが {@code null} の場合にthrowする
      * @throws NoSuchFieldException     オブジェクトaまたはオブジェクトbのフィールドが見つからない場合にthrowする
      * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
@@ -237,7 +237,7 @@ public final class ObjectUtil extends ObjectUtils {
     }
 
     /**
-     * オブジェクトがnullかどうかをチェックし、nullであるならば {@linkplain NullPointerException} をthrowする
+     * オブジェクトがnullかどうかをチェックし、nullであるならば {@link NullPointerException} をthrowする
      * 
      * @param a オブジェクトa
      * @param b オブジェクトb
@@ -254,7 +254,7 @@ public final class ObjectUtil extends ObjectUtils {
     }
 
     /**
-     * オブジェクトのクラス名が同一かチェックする。同一でない場合は {@linkplain IllegalArgumentException} をthrowする
+     * オブジェクトのクラス名が同一かチェックする。同一でない場合は {@link IllegalArgumentException} をthrowする
      * 
      * @param a オブジェクトa
      * @param b オブジェクトb
@@ -276,7 +276,7 @@ public final class ObjectUtil extends ObjectUtils {
      * @param excludes 除外フィールド名のString配列
      * @return フィールドリスト
      */
-    private static final List<String> getFieldNames(Object object, String... excludes) {
+    public static final List<String> getFieldNames(Object object, String... excludes) {
         // 念のためthis$0を除外しておく
         return Arrays.asList(object.getClass().getDeclaredFields()).stream().map(Field::getName)
                 .filter(name -> !Arrays.asList(excludes).contains(name) && !name.matches("this\\$0"))
