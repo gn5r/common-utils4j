@@ -9,24 +9,37 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 public class ObjectUtilTest {
 
     @lombok.Data
     @AllArgsConstructor
+    @NoArgsConstructor
     private class User {
         private Integer id;
         private Integer age;
         private String name;
     }
+ 
+    @lombok.Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private class Account {
+        private Integer index;
+        private String codeName;
+        private String sex;
+    }
+
 
     @Test
     public void diffTest() {
-        User user1 = new User(1, 20, "gn5r");
-        User user2 = new User(1, 24, "gn5r");
+        User user = new User(1, 20, "gn5r");
+        Account account = new Account(111, "shangyuan", "男");
 
-        final List<Difference> diffList = ObjectUtil.diff(user1, user2);
-        diffList.stream().forEach(
-                diff -> System.out.println(ToStringBuilder.reflectionToString(diff, ToStringStyle.SHORT_PREFIX_STYLE)));
+        ObjectUtil.check(user, account);
+        // final List<Difference> diffList = ObjectUtil.diff(user, account);
+        // diffList.stream().forEach(
+        //         diff -> System.out.println(ToStringBuilder.reflectionToString(diff, ToStringStyle.SHORT_PREFIX_STYLE)));
     }
 }
