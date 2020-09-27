@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <pluginGroups></pluginGroups>
+
+  <proxies></proxies>
+
+  <servers>
+    <server>
+      <id>github</id>
+      <username>gn5r</username>
+      <password>Personal Access Token</password>
+    </server>
+  </servers>
+
+  <mirrors></mirrors>
+
+  <activeProfiles>
+    <activeProfile>github</activeProfile>
+  </activeProfiles>
+
+  <profiles>
+    <profile>
+      <id>github</id>
+      <repositories>
+        <!-- common-utils を使うための設定 -->
+        <repository>
+          <id>common-utils</id>
+          <name>Common Util Library for Java</name>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <url>https://maven.pkg.github.com/gn5r/common-utils4j</url>
+        </repository>
+        <!-- spring-boot-commonを使うための設定 -->
+        <repository>
+          <id>spring-boot-common</id>
+          <name>Spring boot common library</name>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <url>https://maven.pkg.github.com/gn5r/spring-boot-common</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
+</settings>
