@@ -37,7 +37,8 @@ public class ObjectUtilTest {
         User user = new User(1, 20, "gn5r");
         Account account = new Account(111, "shangyuan", "男");
 
-        ObjectUtil.check(user, account);
+        final boolean diff = ObjectUtil.check(user, account);
+        System.out.println(diff);
         // final List<Difference> diffList = ObjectUtil.diff(user, account);
         // diffList.stream().forEach(
         //         diff -> System.out.println(ToStringBuilder.reflectionToString(diff, ToStringStyle.SHORT_PREFIX_STYLE)));

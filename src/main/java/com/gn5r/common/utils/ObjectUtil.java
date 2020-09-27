@@ -21,10 +21,12 @@ import org.apache.commons.lang3.ObjectUtils;
  * {@link Difference} のリストを返却する。相違がなければ空のリストを返却する。</li>
  * <li><b>checkSameObject</b> - 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば true
  * を、相違がなければ false を返却する。</li>
- * <li><b>diff</b> - クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば
- * {@link Difference} のリストを返却する。相違がなければ空のリストを返却する</li>
+ * <li><b>diff</b> - クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば {@link Difference}
+ * のリストを返却する。相違がなければ空のリストを返却する</li>
  * <li><b>check</b> - クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば true を、相違がなければ
  * false を返却する</li>
+ * <li><b>getFieldNames</b> - オブジェクトのフィールドリストを返却する</li>
+ * <li><b>getSameFieldNames</b> - 指定した2つのフィールドリストから同一のフィールドリストを返却する</li>
  * </ul>
  *
  * @author gn5r
@@ -34,8 +36,8 @@ import org.apache.commons.lang3.ObjectUtils;
 public final class ObjectUtil extends ObjectUtils {
 
     /**
-     * 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば
-     * {@link Difference} のリストを返却する。相違がなければ空のリストを返却する
+     * 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば {@link Difference}
+     * のリストを返却する。相違がなければ空のリストを返却する
      * 
      * @param <T>      比較するオブジェクトのタイプ
      * @param a        オブジェクトa
@@ -44,6 +46,7 @@ public final class ObjectUtil extends ObjectUtils {
      * @return {@link Difference} 相違フィールドリスト
      * @throws NullPointerException     オブジェクトaまたはオブジェクトbが {@code null} の場合にthrowする
      * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
+     * @since 0.1.2-RELEASE
      */
     public static final <T> List<Difference> diffSameObject(T a, T b, String... excludes) {
         List<Difference> diffList = new ArrayList<Difference>();
@@ -88,6 +91,7 @@ public final class ObjectUtil extends ObjectUtils {
      * @return 相違有無
      * @throws NullPointerException     オブジェクトaまたはオブジェクトbが {@code null} の場合にthrowする
      * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
+     * @since 0.1.2-RELEASE
      */
     public static final <T> boolean checkSameObject(T a, T b, String... excludes) {
         // チェック処理
@@ -133,6 +137,7 @@ public final class ObjectUtil extends ObjectUtils {
      * @throws NullPointerException     オブジェクトaまたはオブジェクトbが {@code null} の場合にthrowする
      * @throws NoSuchFieldException     オブジェクトaまたはオブジェクトbのフィールドが見つからない場合にthrowする
      * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
+     * @since 0.1.4-RELEASE
      */
     public static final <T> List<Difference> diff(T a, T b, String... excludes) {
         List<Difference> diffList = new ArrayList<>();
@@ -150,7 +155,7 @@ public final class ObjectUtil extends ObjectUtils {
         List<String> fieldBList = getFieldNames(b, excludes);
 
         // オブジェクトaとオブジェクトbの同一フィールドを取得する
-        sameField = fieldAList.stream().filter(name -> fieldBList.contains(name)).collect(Collectors.toList());
+        sameField = getSameFieldNames(fieldAList, fieldBList);
 
         for (String name : sameField) {
             try {
@@ -191,6 +196,7 @@ public final class ObjectUtil extends ObjectUtils {
      * @throws NullPointerException     オブジェクトaまたはオブジェクトbが {@code null} の場合にthrowする
      * @throws NoSuchFieldException     オブジェクトaまたはオブジェクトbのフィールドが見つからない場合にthrowする
      * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
+     * @since 0.1.4-RELEASE
      */
     public static final <T> boolean check(T a, T b, String... excludes) {
         // チェック処理
@@ -206,7 +212,7 @@ public final class ObjectUtil extends ObjectUtils {
         List<String> fieldBList = getFieldNames(b, excludes);
 
         // オブジェクトaとオブジェクトbの同一フィールドを取得する
-        sameField = fieldAList.stream().filter(name -> fieldBList.contains(name)).collect(Collectors.toList());
+        sameField = getSameFieldNames(fieldAList, fieldBList);
 
         for (String name : sameField) {
             try {
@@ -274,11 +280,32 @@ public final class ObjectUtil extends ObjectUtils {
      * @param object   フィールド一覧を取得したいオブジェクト
      * @param excludes 除外フィールド名のString配列
      * @return フィールドリスト
+     * @since 0.1.5
      */
     public static final List<String> getFieldNames(Object object, String... excludes) {
         // 念のためthis$0を除外しておく
         return Arrays.asList(object.getClass().getDeclaredFields()).stream().map(Field::getName)
                 .filter(name -> !Arrays.asList(excludes).contains(name) && !name.matches("this\\$0"))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * 指定した2つのフィールドリストから同一のフィールドリストを返却する
+     * 
+     * @param a オブジェクトaのフィールドリスト
+     * @param b オブジェクトbのフィールドリスト
+     * @return 同一フィールドリスト
+     * @throws IllegalArgumentException 同一フィールドが存在しない場合にthrowする
+     * @since 0.1.8
+     */
+    public static final List<String> getSameFieldNames(List<String> a, List<String> b) {
+        final List<String> fieldList = a.stream().filter(name -> b.contains(name)).collect(Collectors.toList());
+
+        // 同一フィールドが存在しない場合は例外とする
+        if (fieldList.isEmpty()) {
+            throw new IllegalArgumentException("同一フィールドが存在しません");
+        }
+
+        return fieldList;
     }
 }
