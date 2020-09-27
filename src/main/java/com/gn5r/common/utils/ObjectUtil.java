@@ -225,8 +225,8 @@ public final class ObjectUtil extends ObjectUtils {
                     final Object paramA = fieldA.get(a);
                     final Object paramB = fieldB.get(b);
 
-                    // フィールドパラメータが一致すればtrueを返却する
-                    if (Objects.equals(paramA, paramB)) {
+                    // フィールドパラメータが一致しなければtrueを返却する
+                    if (!Objects.equals(paramA, paramB)) {
                         return true;
                     }
                 } catch (IllegalArgumentException | IllegalAccessException e) {

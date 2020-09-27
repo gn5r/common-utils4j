@@ -21,26 +21,32 @@ public class ObjectUtilTest {
         private Integer age;
         private String name;
     }
- 
+
     @lombok.Data
     @AllArgsConstructor
     @NoArgsConstructor
     private class Account {
-        private Integer index;
+        private Integer id;
         private String codeName;
         private String sex;
     }
 
-
     @Test
     public void diffTest() {
         User user = new User(1, 20, "gn5r");
-        Account account = new Account(111, "shangyuan", "男");
+        Account account = new Account(1, "shangyuan", "男");
 
         final boolean diff = ObjectUtil.check(user, account);
         System.out.println(diff);
-        // final List<Difference> diffList = ObjectUtil.diff(user, account);
-        // diffList.stream().forEach(
-        //         diff -> System.out.println(ToStringBuilder.reflectionToString(diff, ToStringStyle.SHORT_PREFIX_STYLE)));
+    }
+
+    @Test
+    public void diffTest2() {
+        User user = new User(1, 20, "gn5r");
+        Account account = new Account(111, "shangyuan", "男");
+
+        final List<Difference> diffList = ObjectUtil.diff(user, account);
+        diffList.stream().forEach(
+                diff -> System.out.println(ToStringBuilder.reflectionToString(diff, ToStringStyle.SHORT_PREFIX_STYLE)));
     }
 }
