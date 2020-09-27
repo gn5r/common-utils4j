@@ -17,14 +17,14 @@ import org.apache.commons.lang3.ObjectUtils;
  * </p>
  *
  * <ul>
- * <li><b>diff</b> - クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば
- * {@link Difference}のリストを返却する。相違がなければ空のリストを返却する</li>
- * <li><b>check</b> - クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば {@value true}
- * を、相違がなければ {@value false} を返却する</li>
  * <li><b>diffSameObject</b> - 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば
- * {@link Difference}のリストを返却する。相違がなければ空のリストを返却する。</li>
- * <li><b>checkSameObject</b> - 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば
- * {@value true} を、相違がなければ {@value false} を返却する。</li>
+ * {@link Difference} のリストを返却する。相違がなければ空のリストを返却する。</li>
+ * <li><b>checkSameObject</b> - 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば true
+ * を、相違がなければ false を返却する。</li>
+ * <li><b>diff</b> - クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば
+ * {@link Difference} のリストを返却する。相違がなければ空のリストを返却する</li>
+ * <li><b>check</b> - クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば true を、相違がなければ
+ * false を返却する</li>
  * </ul>
  *
  * @author gn5r
@@ -35,7 +35,7 @@ public final class ObjectUtil extends ObjectUtils {
 
     /**
      * 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば
-     * {@link Difference}のリストを返却する。相違がなければ空のリストを返却する
+     * {@link Difference} のリストを返却する。相違がなければ空のリストを返却する
      * 
      * @param <T>      比較するオブジェクトのタイプ
      * @param a        オブジェクトa
@@ -76,6 +76,46 @@ public final class ObjectUtil extends ObjectUtils {
         }
 
         return diffList;
+    }
+
+    /**
+     * 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば true を、相違がなければ false を返却する。
+     * 
+     * @param <T>      比較するオブジェクトタイプ
+     * @param a        オブジェクトa
+     * @param b        オブジェクトb
+     * @param excludes 除外フィールド名のString配列
+     * @return 相違有無
+     * @throws NullPointerException     オブジェクトaまたはオブジェクトbが {@code null} の場合にthrowする
+     * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
+     */
+    public static final <T> boolean checkSameObject(T a, T b, String... excludes) {
+        // チェック処理
+        checkObjectNull(a, b);
+        checkObjectNull(a, b);
+        checkSameClassName(a, b);
+
+        // privateフィールドにアクセスするには #getDeclaredFields を使う必要がある
+        for (Field field : a.getClass().getDeclaredFields()) {
+            final String fieldName = field.getName();
+
+            // 除外フィールドは比較しない
+            if (!Objects.isNull(excludes) && Arrays.asList(excludes).contains(fieldName))
+                continue;
+
+            try {
+                final Object paramA = field.get(a);
+                final Object paramB = field.get(b);
+
+                if (Objects.equals(paramA, paramB)) {
+                    return true;
+                }
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -137,47 +177,6 @@ public final class ObjectUtil extends ObjectUtils {
         }
 
         return diffList;
-    }
-
-    /**
-     * 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば {@value true} を、相違がなければ
-     * {@value false} を返却する。
-     * 
-     * @param <T>      比較するオブジェクトタイプ
-     * @param a        オブジェクトa
-     * @param b        オブジェクトb
-     * @param excludes 除外フィールド名のString配列
-     * @return 相違有無
-     * @throws NullPointerException     オブジェクトaまたはオブジェクトbが {@code null} の場合にthrowする
-     * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
-     */
-    public static final <T> boolean checkSameObject(T a, T b, String... excludes) {
-        // チェック処理
-        checkObjectNull(a, b);
-        checkObjectNull(a, b);
-        checkSameClassName(a, b);
-
-        // privateフィールドにアクセスするには #getDeclaredFields を使う必要がある
-        for (Field field : a.getClass().getDeclaredFields()) {
-            final String fieldName = field.getName();
-
-            // 除外フィールドは比較しない
-            if (!Objects.isNull(excludes) && Arrays.asList(excludes).contains(fieldName))
-                continue;
-
-            try {
-                final Object paramA = field.get(a);
-                final Object paramB = field.get(b);
-
-                if (Objects.equals(paramA, paramB)) {
-                    return true;
-                }
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return false;
     }
 
     /**

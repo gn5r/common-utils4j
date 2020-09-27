@@ -9,8 +9,8 @@ package com.gn5r.common.resource;
 public final class Difference {
 
     private String fieldName;
-    private Object left;
-    private Object right;
+    private Object a;
+    private Object b;
 
     /**
      * 引数なしのコンストラクタ
@@ -23,13 +23,13 @@ public final class Difference {
      * 引数ありのコンストラクタ
      * 
      * @param fieldName フィールド名(変数名)
-     * @param left      第1引数のフィールドパラメータ
-     * @param right     第2引数のフィールドパラメータ
+     * @param a         オブジェクトaのフィールドパラメータ
+     * @param b         オブジェクトbのフィールドパラメータ
      */
-    public Difference(final String fieldName, final Object left, final Object right) {
+    public Difference(final String fieldName, final Object a, final Object b) {
         this.fieldName = fieldName;
-        this.left = left;
-        this.right = right;
+        this.a = a;
+        this.b = b;
     }
 
     /**
@@ -42,21 +42,21 @@ public final class Difference {
     }
 
     /**
-     * 第1引数の指定したフィールドに格納されている値をセットする
+     * オブジェクトaのフィールドパラメータをセットする
      * 
-     * @param left フィールドパラメータ
+     * @param a フィールドパラメータ
      */
-    public final void setLeft(final String left) {
-        this.left = left;
+    public final void setLeft(final String a) {
+        this.a = a;
     }
 
     /**
-     * 第2引数の指定したフィールドに格納されている値をセットする
+     * オブジェクトbのフィールドパラメータをセットする
      * 
-     * @param right フィールドパラメータ
+     * @param b フィールドパラメータ
      */
-    public final void setRight(final String right) {
-        this.right = right;
+    public final void setRight(final String b) {
+        this.b = b;
     }
 
     /**
@@ -69,20 +69,20 @@ public final class Difference {
     }
 
     /**
-     * 第1引数の指定したフィールドに格納されている値を取得する
+     * オブジェクトaのフィールドパラメータを取得する
      * 
      * @return フィールドパラメータ
      */
-    public final Object getLeft() {
-        return this.left;
+    public final Object getA() {
+        return this.a;
     }
 
     /**
-     * 第2引数の指定したフィールドに格納されている値を取得する
+     * オブジェクトbのフィールドパラメータを取得する
      * 
      * @return フィールドパラメータ
      */
-    public final Object getRight() {
-        return this.right;
+    public final Object getB() {
+        return this.b;
     }
 }

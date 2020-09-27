@@ -13,30 +13,30 @@ public final class DateFormat {
     /**
      * yyyy/MM/dd HH:mm:ss 形式に変換する
      */
-    public final DateTimeFormatter YMD_HMS = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static final DateTimeFormatter YMD_HMS = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
     /**
      * yyyy/MM/dd 形式に変換する
      */
-    public final DateTimeFormatter YMD = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    public static final DateTimeFormatter YMD = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
     /**
      * yyyy 形式に変換する
      */
-    public final DateTimeFormatter YYYY = DateTimeFormatter.ofPattern("yyyy");
+    public static final DateTimeFormatter YYYY = DateTimeFormatter.ofPattern("yyyy");
 
     /**
      * MM 形式に変換する
      */
-    public final DateTimeFormatter MM = DateTimeFormatter.ofPattern("MM");
+    public static final DateTimeFormatter MM = DateTimeFormatter.ofPattern("MM");
 
     /**
      * dd 形式に変換する
      */
-    public final DateTimeFormatter DD = DateTimeFormatter.ofPattern("dd");
+    public static final DateTimeFormatter DD = DateTimeFormatter.ofPattern("dd");
 
     /**
      * HH:mm:ss 形式に変換する
      */
-    public final DateTimeFormatter HMS = DateTimeFormatter.ofPattern("HH:mm:ss");
+    public static final DateTimeFormatter HMS = DateTimeFormatter.ofPattern("HH:mm:ss");
 }

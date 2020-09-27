@@ -45,7 +45,7 @@ public final class StringUtil extends StringUtils {
 	 *
 	 * @param cs チェックしたいCharSequence
 	 * @return 最初の引数が {@code null} であれば 空文字("") を返却し、それ以外の場合は文字列に変換したものを返却
-	 * @see java.util.Objects#toString(Object, String)
+	 * @see java.util.Objects#toString(Object, String) Objects#toString(Object, String)
 	 * @since 0.1.0
 	 */
 	public static String nullToEmpty(final CharSequence cs) {
