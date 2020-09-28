@@ -185,8 +185,7 @@ public final class ObjectUtil extends ObjectUtils {
     }
 
     /**
-     * クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば {@value true} を、相違がなければ {@value false}
-     * を返却する。
+     * クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば true を、相違がなければ false を返却する。
      * 
      * @param <T>      比較するオブジェクトタイプ
      * @param a        オブジェクトa
