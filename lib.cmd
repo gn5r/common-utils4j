@@ -1,7 +1,7 @@
 @echo off
 
-@REM targetä¸‹ã®javadoc.jarã€source.jarã€jarãƒ•ã‚¡ã‚¤ãƒ«ã‚’zipåœ§ç¸®ã™ã‚‹ãƒãƒƒãƒãƒ•ã‚¡ã‚¤ãƒ«
-@REM targetä¸‹ã®jarãƒ•ã‚¡ã‚¤ãƒ«ã‚’ lib.zip ãƒ•ã‚¡ã‚¤ãƒ«åã§åœ§ç¸®ã™ã‚‹
-ECHO jarãƒ•ã‚¡ã‚¤ãƒ«ã‚’zipåœ§ç¸®ã—ã¾ã™
+@REM target‰º‚Ìjavadoc.jarAsource.jarAjarƒtƒ@ƒCƒ‹‚ğzipˆ³k‚·‚éƒoƒbƒ`ƒtƒ@ƒCƒ‹
+@REM target‰º‚Ìjarƒtƒ@ƒCƒ‹‚ğ lib.zip ƒtƒ@ƒCƒ‹–¼‚Åˆ³k‚·‚é
+ECHO jarƒtƒ@ƒCƒ‹‚ğzipˆ³k‚µ‚Ü‚·
 powershell Compress-Archive -Path ./target/*.jar -DestinationPath lib.zip -Force
-ECHO zipåœ§ç¸®ã—ã¾ã—ãŸ
+ECHO zipˆ³k‚µ‚Ü‚µ‚½
