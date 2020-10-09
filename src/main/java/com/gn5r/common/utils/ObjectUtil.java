@@ -17,10 +17,6 @@ import org.apache.commons.lang3.ObjectUtils;
  * </p>
  *
  * <ul>
- * <li><b>diffSameObject</b> - 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば
- * {@link Difference} のリストを返却する。相違がなければ空のリストを返却する。</li>
- * <li><b>checkSameObject</b> - 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば true
- * を、相違がなければ false を返却する。</li>
  * <li><b>diff</b> - クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば {@link Difference}
  * のリストを返却する。相違がなければ空のリストを返却する</li>
  * <li><b>check</b> - クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば true を、相違がなければ
@@ -34,93 +30,6 @@ import org.apache.commons.lang3.ObjectUtils;
  * @see ObjectUtils
  */
 public final class ObjectUtil extends ObjectUtils {
-
-    /**
-     * 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば {@link Difference}
-     * のリストを返却する。相違がなければ空のリストを返却する
-     * 
-     * @param <T>      比較するオブジェクトのタイプ
-     * @param a        オブジェクトa
-     * @param b        オブジェクトb
-     * @param excludes 除外フィールド名のString配列
-     * @return {@link Difference} 相違フィールドリスト
-     * @throws NullPointerException     オブジェクトaまたはオブジェクトbが {@code null} の場合にthrowする
-     * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
-     * @since 0.1.2-RELEASE
-     */
-    public static final <T> List<Difference> diffSameObject(T a, T b, String... excludes) {
-        List<Difference> diffList = new ArrayList<Difference>();
-
-        // チェック処理
-        checkObjectNull(a, b);
-        checkSameClassName(a, b);
-
-        for (Field field : a.getClass().getDeclaredFields()) {
-
-            // privateフィールドにアクセスするには #setAccessible をtrueにする必要がある
-            field.setAccessible(true);
-            final String fieldName = field.getName();
-
-            // 除外フィールドは比較しない
-            if (!Objects.isNull(excludes) && Arrays.asList(excludes).contains(fieldName))
-                continue;
-
-            try {
-                final Object paramA = field.get(a);
-                final Object paramB = field.get(b);
-
-                if (!Objects.equals(paramA, paramB)) {
-                    final Difference e = new Difference(fieldName, paramA, paramB);
-                    diffList.add(e);
-                }
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return diffList;
-    }
-
-    /**
-     * 同一クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば true を、相違がなければ false を返却する。
-     * 
-     * @param <T>      比較するオブジェクトタイプ
-     * @param a        オブジェクトa
-     * @param b        オブジェクトb
-     * @param excludes 除外フィールド名のString配列
-     * @return 相違有無
-     * @throws NullPointerException     オブジェクトaまたはオブジェクトbが {@code null} の場合にthrowする
-     * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
-     * @since 0.1.2-RELEASE
-     */
-    public static final <T> boolean checkSameObject(T a, T b, String... excludes) {
-        // チェック処理
-        checkObjectNull(a, b);
-        checkObjectNull(a, b);
-        checkSameClassName(a, b);
-
-        // privateフィールドにアクセスするには #getDeclaredFields を使う必要がある
-        for (Field field : a.getClass().getDeclaredFields()) {
-            final String fieldName = field.getName();
-
-            // 除外フィールドは比較しない
-            if (!Objects.isNull(excludes) && Arrays.asList(excludes).contains(fieldName))
-                continue;
-
-            try {
-                final Object paramA = field.get(a);
-                final Object paramB = field.get(b);
-
-                if (Objects.equals(paramA, paramB)) {
-                    return true;
-                }
-            } catch (IllegalArgumentException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return false;
-    }
 
     /**
      * クラスオブジェクトの同一フィールドパラメータを比較する。パラメータに相違があれば
@@ -254,22 +163,6 @@ public final class ObjectUtil extends ObjectUtils {
 
         if (Objects.isNull(b)) {
             throw new NullPointerException("オブジェクトbがnullです");
-        }
-    }
-
-    /**
-     * オブジェクトのクラス名が同一かチェックする。同一でない場合は {@link IllegalArgumentException} をthrowする
-     * 
-     * @param a オブジェクトa
-     * @param b オブジェクトb
-     * @throws IllegalArgumentException オブジェクトa及びオブジェクトbのクラス名が同一でないときにthrowする
-     */
-    private static final void checkSameClassName(Object a, Object b) {
-        final String classNameA = a.getClass().getName();
-        final String classNameB = b.getClass().getName();
-
-        if (!Objects.equals(classNameA, classNameB)) {
-            throw new IllegalArgumentException("同一クラス以外では比較できません");
         }
     }
 
