@@ -33,4 +33,4 @@ build/
 # .vscode/
 
 ### lib.cmdで生成したzipファイルは除外 ###
-lib.zip
+common-utils4j.zip
