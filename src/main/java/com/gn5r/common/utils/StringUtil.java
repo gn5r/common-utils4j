@@ -190,7 +190,6 @@ public final class StringUtil extends StringUtils {
 	 * </p>
 	 * 
 	 * @param str      文字列
-	 * @param encoding エンコーディング
 	 * @return バイト数
 	 * @since 0.3.3
 	 */
