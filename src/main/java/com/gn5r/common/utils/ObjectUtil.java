@@ -38,7 +38,6 @@ public final class ObjectUtil extends ObjectUtils {
      * 同一フィールドが存在しない場合はパラメータの比較をしないので空のリストが返却される
      * </p>
      * 
-     * @param <T>      比較するオブジェクトタイプ
      * @param a        オブジェクトa
      * @param b        オブジェクトb
      * @param excludes 除外フィールド名のString配列
@@ -48,23 +47,14 @@ public final class ObjectUtil extends ObjectUtils {
      * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
      * @since 0.1.4-RELEASE
      */
-    public static final <T> List<Difference> diff(T a, T b, String... excludes) {
+    public static final List<Difference> diff(Object a, Object b, String... excludes) {
         List<Difference> diffList = new ArrayList<>();
 
         // チェック処理
         checkObjectNull(a, b);
 
         // 同一フィールドリスト
-        List<String> sameField = new ArrayList<>();
-
-        // オブジェクトaのフィールド一覧を取得
-        List<String> fieldAList = getFieldNames(a, excludes);
-
-        // オブジェクトbのフィールド一覧を取得
-        List<String> fieldBList = getFieldNames(b, excludes);
-
-        // オブジェクトaとオブジェクトbの同一フィールドを取得する
-        sameField = getSameFieldNames(fieldAList, fieldBList);
+        final List<String> sameField = getSameFieldNames(a, b, excludes);
 
         for (String name : sameField) {
             try {
@@ -73,19 +63,15 @@ public final class ObjectUtil extends ObjectUtils {
                 Field fieldB = b.getClass().getDeclaredField(name);
                 fieldB.setAccessible(true);
 
-                try {
-                    final Object paramA = fieldA.get(a);
-                    final Object paramB = fieldB.get(b);
+                final Object paramA = fieldA.get(a);
+                final Object paramB = fieldB.get(b);
 
-                    if (!Objects.equals(paramA, paramB)) {
-                        final Difference e = new Difference(name, paramA, paramB);
-                        diffList.add(e);
-                    }
-                } catch (IllegalArgumentException | IllegalAccessException e) {
-                    e.printStackTrace();
+                if (!Objects.equals(paramA, paramB)) {
+                    final Difference e = new Difference(name, paramA, paramB);
+                    diffList.add(e);
                 }
 
-            } catch (NoSuchFieldException e) {
+            } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
@@ -96,7 +82,6 @@ public final class ObjectUtil extends ObjectUtils {
     /**
      * クラスオブジェクトのフィールドパラメータを比較する。パラメータに相違があれば true を、相違がなければ false を返却する。
      * 
-     * @param <T>      比較するオブジェクトタイプ
      * @param a        オブジェクトa
      * @param b        オブジェクトb
      * @param excludes 除外フィールド名のString配列
@@ -106,21 +91,12 @@ public final class ObjectUtil extends ObjectUtils {
      * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
      * @since 0.1.4-RELEASE
      */
-    public static final <T> boolean check(T a, T b, String... excludes) {
+    public static final boolean check(Object a, Object b, String... excludes) {
         // チェック処理
         checkObjectNull(a, b);
 
         // 同一フィールドリスト
-        List<String> sameField = new ArrayList<>();
-
-        // オブジェクトaのフィールド一覧を取得
-        List<String> fieldAList = getFieldNames(a, excludes);
-
-        // オブジェクトbのフィールド一覧を取得
-        List<String> fieldBList = getFieldNames(b, excludes);
-
-        // オブジェクトaとオブジェクトbの同一フィールドを取得する
-        sameField = getSameFieldNames(fieldAList, fieldBList);
+        final List<String> sameField = getSameFieldNames(a, b, excludes);
 
         for (String name : sameField) {
             try {
@@ -129,24 +105,61 @@ public final class ObjectUtil extends ObjectUtils {
                 Field fieldB = b.getClass().getDeclaredField(name);
                 fieldB.setAccessible(true);
 
-                try {
-                    final Object paramA = fieldA.get(a);
-                    final Object paramB = fieldB.get(b);
+                final Object paramA = fieldA.get(a);
+                final Object paramB = fieldB.get(b);
 
-                    // フィールドパラメータが一致しなければtrueを返却する
-                    if (!Objects.equals(paramA, paramB)) {
-                        return true;
-                    }
-                } catch (IllegalArgumentException | IllegalAccessException e) {
-                    e.printStackTrace();
+                // フィールドパラメータが一致しなければtrueを返却する
+                if (!Objects.equals(paramA, paramB)) {
+                    return true;
                 }
 
-            } catch (NoSuchFieldException e) {
+            } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
 
         return false;
+    }
+
+    /**
+     * クラスオブジェクトの同一フィールドパラメータを比較する。一致したパラメータがあれば {@link Difference}
+     * のリストを返却する。相違があれば空のリストを返却する
+     * 
+     * @param a        オブジェクトa
+     * @param b        オブジェクトb
+     * @param excludes 除外フィールド名のString配列
+     * @return {@link Difference} 一致フィールドリスト
+     * @throws NullPointerException     オブジェクトaまたはオブジェクトbが {@code null} の場合にthrowする
+     * @throws NoSuchFieldException     オブジェクトaまたはオブジェクトbのフィールドが見つからない場合にthrowする
+     * @throws IllegalArgumentException オブジェクトaまたはオブジェクトbのフィールドにアクセスできなかった場合にthrowする
+     * @since 0.3.4
+     */
+    public static final List<Difference> same(Object a, Object b, String... excludes) {
+        checkObjectNull(a, b);
+        List<Difference> sameField = new ArrayList<>();
+
+        final List<String> fieldNames = getSameFieldNames(a, b, excludes);
+
+        for (String name : fieldNames) {
+            try {
+                Field fieldA = a.getClass().getDeclaredField(name);
+                fieldA.setAccessible(true);
+                Field fieldB = b.getClass().getDeclaredField(name);
+                fieldB.setAccessible(true);
+
+                final Object paramA = fieldA.get(a);
+                final Object paramB = fieldB.get(b);
+
+                if (Objects.equals(paramA, paramB)) {
+                    final Difference e = new Difference(name, paramA, paramB);
+                    sameField.add(e);
+                }
+            } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return sameField;
     }
 
     /**
@@ -182,22 +195,33 @@ public final class ObjectUtil extends ObjectUtils {
     }
 
     /**
+     * 指定した2つのオブジェクトから同一のフィールドリストを返却する
+     * 
+     * @param a        オブジェクトa
+     * @param b        オブジェクトb
+     * @param excludes 除外フィールド名のString配列
+     * @return 同一フィールドリスト
+     * @throws NullPointerException オブジェクトaまたはオブジェクトbが {@code null} の場合にthrowする
+     * @since 0.3.4
+     */
+    public static final List<String> getSameFieldNames(Object a, Object b, String... excludes) {
+        checkObjectNull(a, b);
+
+        final List<String> A = getFieldNames(a, excludes);
+        final List<String> B = getFieldNames(b, excludes);
+
+        return getSameFieldNames(A, B);
+    }
+
+    /**
      * 指定した2つのフィールドリストから同一のフィールドリストを返却する
      * 
      * @param a オブジェクトaのフィールドリスト
      * @param b オブジェクトbのフィールドリスト
      * @return 同一フィールドリスト
-     * @throws IllegalArgumentException 同一フィールドが存在しない場合にthrowする
      * @since 0.1.8
      */
     public static final List<String> getSameFieldNames(List<String> a, List<String> b) {
-        final List<String> fieldList = a.stream().filter(name -> b.contains(name)).collect(Collectors.toList());
-
-        // 同一フィールドが存在しない場合は例外とする
-        if (fieldList.isEmpty()) {
-            throw new IllegalArgumentException("同一フィールドが存在しません");
-        }
-
-        return fieldList;
+        return a.stream().filter(name -> b.contains(name)).collect(Collectors.toList());
     }
 }

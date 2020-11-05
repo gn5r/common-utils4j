@@ -37,7 +37,7 @@ public final class ArrayUtil extends ArrayUtils {
     public static final <T> T[] push(T[] array, Object... element) {
 
         if (Objects.isNull(array)) {
-            return array;
+            return null;
         }
 
         if (Objects.isNull(element)) {
@@ -62,7 +62,7 @@ public final class ArrayUtil extends ArrayUtils {
 
     /**
      * <p>
-     * オブジェクト配列の最初に1つ以上の要素を追加する
+     * オブジェクト配列の先頭に1つ以上の要素を追加する
      * </p>
      * 
      * <p>
@@ -80,7 +80,7 @@ public final class ArrayUtil extends ArrayUtils {
     public static final <T> T[] unshift(T[] array, Object... element) {
 
         if (Objects.isNull(array)) {
-            return array;
+            return null;
         }
 
         if (Objects.isNull(element)) {
@@ -99,5 +99,34 @@ public final class ArrayUtil extends ArrayUtils {
         }
 
         return tmp;
+    }
+
+    /**
+     * <p>
+     * オブジェクト配列から指定した要素の位置を返却する。見つからない場合は -1 を返却する
+     * </p>
+     * 
+     * @param <T>     配列のオブジェクトタイプ
+     * @param array   オブジェクト配列
+     * @param element 位置を取得したい要素
+     * @return 要素の位置
+     * @since 0.3.4
+     */
+    public static final <T> int findIndex(T[] array, Object element) {
+        if (Objects.isNull(array)) {
+            return -1;
+        }
+
+        if (Objects.isNull(element)) {
+            return -1;
+        }
+
+        for (int i = 0; i < array.length; i++) {
+            if (Objects.equals(array[i], element)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
