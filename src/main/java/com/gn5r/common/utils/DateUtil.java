@@ -132,6 +132,7 @@ public final class DateUtil extends DateUtils {
      * <li><b>0</b>:上半期</li>
      * <li><b>0.5</b>:下半期</li>
      * </ul>
+     * 何らかの理由で半期が取得できない場合は -1 を返却する
      * 
      * @param date 日付文字列
      * @return 上半期/下半期
@@ -141,14 +142,14 @@ public final class DateUtil extends DateUtils {
         final int month = parseDate(date).getMonthValue();
 
         if (1 <= month && month <= 3) {
-            return 0.5;
+            return -0.5;
         } else if (4 <= month && month <= 9) {
             return 0;
         } else if (10 <= month && month <= 12) {
             return 0.5;
         }
 
-        return 0;
+        return -1;
     }
 
     /**
