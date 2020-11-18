@@ -25,7 +25,7 @@
           <releases>
             <enabled>true</enabled>
           </releases>
-          <url>https://maven.pkg.github.com/gn5r/common-utils</url>
+          <url>https://maven.pkg.github.com/gn5r/common-utils4j</url>
         </repository>
       </repositories>
     </profile>
