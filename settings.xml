@@ -8,7 +8,12 @@
 
   <servers>
     <server>
-      <id>github</id>
+      <id>common-utils</id>
+      <username>gn5r</username>
+      <password>Personal Access Token</password>
+    </server>
+    <server>
+      <id>spring-boot-common</id>
       <username>gn5r</username>
       <password>Personal Access Token</password>
     </server>

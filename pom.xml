@@ -21,7 +21,7 @@
 	<!-- Github Packageへデプロイする為の設定 -->
 	<distributionManagement>
 		<repository>
-			<id>github</id>
+			<id>common-utils</id>
 			<name>Spring Boot Common</name>
 			<url>https://maven.pkg.github.com/gn5r/common-utils4j</url>
 		</repository>
