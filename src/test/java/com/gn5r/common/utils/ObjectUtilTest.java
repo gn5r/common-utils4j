@@ -1,5 +1,6 @@
 package com.gn5r.common.utils;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.gn5r.common.resource.Difference;
@@ -16,7 +17,8 @@ public class ObjectUtilTest {
     @lombok.Data
     @AllArgsConstructor
     @NoArgsConstructor
-    private class User {
+    private class User implements Serializable {
+        private static final long serialVersionUID = 1L;
         private Integer id;
         private Integer age;
         private String name;
@@ -25,7 +27,8 @@ public class ObjectUtilTest {
     @lombok.Data
     @AllArgsConstructor
     @NoArgsConstructor
-    private class Account {
+    private class Account implements Serializable {
+        private static final long serialVersionUID = 1L;
         private Integer id;
         private String codeName;
         private String sex;

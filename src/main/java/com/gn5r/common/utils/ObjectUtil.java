@@ -123,7 +123,7 @@ public final class ObjectUtil extends ObjectUtils {
 
     /**
      * クラスオブジェクトの同一フィールドパラメータを比較する。一致したパラメータがあれば {@link Difference}
-     * のリストを返却する。相違があれば空のリストを返却する
+     * のリストを返却する。一致したパラメータが見つからなければ空のリストを返却する
      * 
      * @param a        オブジェクトa
      * @param b        オブジェクトb
@@ -188,9 +188,9 @@ public final class ObjectUtil extends ObjectUtils {
      * @since 0.1.5
      */
     public static final List<String> getFieldNames(Object object, String... excludes) {
-        // 念のためthis$0を除外しておく
+        // 念のためthis$0とserialVersionUIDを除外しておく
         return Arrays.asList(object.getClass().getDeclaredFields()).stream().map(Field::getName)
-                .filter(name -> !Arrays.asList(excludes).contains(name) && !name.matches("this\\$0"))
+                .filter(name -> !Arrays.asList(excludes).contains(name) && !name.matches("this\\$0|serialVersionUID"))
                 .collect(Collectors.toList());
     }
 
