@@ -40,7 +40,7 @@
 
 ```pom.xml:xml
 <dependency>
-  <groupId>com.github.gn5r</groupId>
+  <groupId>com.gn5r</groupId>
   <artifactId>common-utils<artifactId>
   <version>VERSION</version>
 </dependency>
@@ -56,7 +56,7 @@
 
 ```pom.xml:xml
 <dependency>
-  <groupId>com.github.gn5r</groupId>
+  <groupId>com.gn5r</groupId>
   <artifactId>common-utils<artifactId>
   <version>VERSION</version>
   <scope>system</scope>
