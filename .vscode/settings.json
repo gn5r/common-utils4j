@@ -1,8 +1,6 @@
 {
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "java.maven.updateSnapshots": true,
-  "java.maven.downloadSources": true,
-  "maven.executable.options": "-s C:\\Users\\gn5r\\.m2\\settings_github.xml",
+  "java.configuration.maven.userSettings": "%USERPROFILE%\\.m2\\settings_github.xml",
+  "maven.executable.options": "-s %USERPROFILE%\\.m2\\settings_github.xml",
   "maven.terminal.favorites": [
     {
       "alias": "install",
@@ -12,5 +10,6 @@
       "alias": "deploy",
       "command": "clean deploy"
     }
-  ]
+  ],
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
