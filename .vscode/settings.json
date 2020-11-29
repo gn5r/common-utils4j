@@ -1,6 +1,4 @@
 {
-  "java.configuration.maven.userSettings": "%USERPROFILE%\\.m2\\settings_github.xml",
-  "maven.executable.options": "-s %USERPROFILE%\\.m2\\settings_github.xml",
   "maven.terminal.favorites": [
     {
       "alias": "install",
@@ -11,5 +9,5 @@
       "command": "clean deploy"
     }
   ],
-  "java.configuration.updateBuildConfiguration": "interactive"
+  "java.configuration.updateBuildConfiguration": "disabled"
 }

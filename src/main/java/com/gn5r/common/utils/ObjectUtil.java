@@ -3,7 +3,9 @@ package com.gn5r.common.utils;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -163,6 +165,36 @@ public final class ObjectUtil extends ObjectUtils {
     }
 
     /**
+     * オブジェクトを文字列に変換する
+     * <p>
+     * 例:Test[id=1, name=test]
+     * </p>
+     * 
+     * @param object
+     * @return オブジェクト名及びオブジェクトの中身
+     * @since 0.3.7
+     */
+    public static final String toString(Object object) {
+        if (Objects.isNull(object)) {
+            throw new NullPointerException("オブジェクトがnullです");
+        }
+
+        final Map<String, Object> map = toMap(object);
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(object.getClass().getSimpleName() + "[");
+
+        for (Map.Entry<String, Object> field : map.entrySet()) {
+            final String str = field.getKey() + "=" + field.getValue();
+            buffer.append(str + ", ");
+        }
+
+        final String result = buffer.toString().replaceAll(",\\s$", "");
+
+        return result.concat("]");
+    }
+
+    /**
      * オブジェクトがnullかどうかをチェックし、nullであるならば {@link NullPointerException} をthrowする
      * 
      * @param a オブジェクトa
@@ -192,6 +224,34 @@ public final class ObjectUtil extends ObjectUtils {
         return Arrays.asList(object.getClass().getDeclaredFields()).stream().map(Field::getName)
                 .filter(name -> !Arrays.asList(excludes).contains(name) && !name.matches("this\\$0|serialVersionUID"))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * オブジェクトの中身のMapを返却する
+     * 
+     * @param object   オブジェクト
+     * @param excludes 除外フィールド名のString配列
+     * @return 変数名:パラメータのマップ
+     * @since 0.3.7
+     */
+    public static final Map<String, Object> toMap(Object object, String... excludes) {
+        Map<String, Object> fieldNames = new HashMap<>();
+        final List<Field> fields = Arrays.asList(object.getClass().getDeclaredFields());
+
+        for (Field field : fields) {
+            try {
+                field.setAccessible(true);
+                final String name = field.getName();
+                final Object param = field.get(object);
+                if (!Arrays.asList(excludes).contains(name) && !name.matches("this\\$0|serialVersionUID")) {
+                    fieldNames.put(name, param);
+                }
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return fieldNames;
     }
 
     /**
