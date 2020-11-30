@@ -27,11 +27,18 @@ public class ObjectUtilTest {
         private Integer id;
         private String codeName;
         private String sex;
+
+        // @Override
+        public String toString() {
+            return ObjectUtil.toString(this);
+        }
     }
 
     @Test
     public void diffTest() {
         final Account account = new Account(1, "shangyuan", "男");
-        System.out.println(ObjectUtil.toString(account));
+        System.out.println(account);
+        final User user = new User(1, 24, "gn5r");
+        System.out.println(user);
     }
 }

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gn5r</groupId>
 	<artifactId>common-utils</artifactId>
-	<version>0.3.7</version>
+	<version>0.3.8</version>
 	<name>common-utils</name>
 	<url>https://github.com/gn5r/common-utils4j</url>
 	<description>Common Util Library for Java</description>
@@ -32,6 +32,7 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.11</version>
+			<scope>compile</scope>
 		</dependency>
 
 		<!-- JUnit5 -->
